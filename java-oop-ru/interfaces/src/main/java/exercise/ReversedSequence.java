@@ -5,15 +5,11 @@ public class ReversedSequence implements CharSequence{
     private String text;
 
     public ReversedSequence(String text) {
-        this.text = text;
+        this.text = new StringBuilder(text).reverse().toString();
     }
 
-//    public static String reverseString(String text) {
-//        return new StringBuilder(text).reverse().toString();
-//    }
-
     public String toString() {
-        return new StringBuilder(this.text).reverse().toString();
+        return this.text;
     }
 
     @Override
@@ -28,7 +24,7 @@ public class ReversedSequence implements CharSequence{
 
     @Override
     public CharSequence subSequence(int start, int end) {
-        return null;
+        return this.text.subSequence(start, end);
     }
 }
 // END
