@@ -13,19 +13,9 @@ public final class App {
         Javalin app = Javalin.create(config -> {
             config.plugins.enableDevLogging();
         });
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<String> phones = Data.getPhones();
-        List<String> domains = Data.getDomains();
-
-        app.get("/phones", ctx -> ctx
-                .result(objectMapper
-                        .writerWithDefaultPrettyPrinter()
-                        .writeValueAsString(phones)));
-        app.get("/domains", ctx -> ctx
-                .result(objectMapper
-                        .writerWithDefaultPrettyPrinter()
-                        .writeValueAsString(domains)));
+        
+        app.get("/phones", ctx -> ctx.json(Data.getPhones()));
+        app.get("/domains", ctx -> ctx.json(Data.getDomains()));
 
         return app;
         // END
