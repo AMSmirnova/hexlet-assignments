@@ -28,7 +28,7 @@ public final class App {
             ctx.json(company);
 
         });
-        
+
         // END
 
         app.get("/companies", ctx -> {
