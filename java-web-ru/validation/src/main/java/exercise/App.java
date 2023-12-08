@@ -38,7 +38,10 @@ public final class App {
             try {
                 var title = ctx.formParamAsClass("title", String.class)
                         .check(value -> value.length() >= 2, "Название не должно быть короче двух символов")
-                        .check(value -> ArticleRepository.search(value).isEmpty(), "Статья с таким названием уже существует")
+                        .check(value -> ArticleRepository
+                                .search(value)
+                                .isEmpty(),
+                                "Статья с таким названием уже существует")
                         .get();
                 var content = ctx.formParamAsClass("content", String.class)
                         .check(value -> value.length() >= 10, "Статья должна быть не короче 10 символов")
