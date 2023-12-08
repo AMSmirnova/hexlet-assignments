@@ -51,7 +51,7 @@ public final class App {
                 ctx.redirect("/articles");
             } catch (ValidationException e) {
                 var page = new BuildArticlePage(e.getErrors());
-                ctx.render("articles/build.jte", Collections.singletonMap("page", page));
+                ctx.render("articles/build.jte", Collections.singletonMap("page", page)).status(422);
             }
         });
 
