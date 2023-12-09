@@ -17,13 +17,13 @@ content = @`
         <div>
             <label>
                 Заголовок
-                <input type="title" required name="title" />
+                <input type="title" name="title" value="${page.getTitle()}" />
             </label>
         </div>
         <div>
             <label>
                 Статья
-                <textarea type="content" required name="content"></textarea>
+                <textarea type="content" name="content">${page.getContent()}</textarea>
 
             </label>
         </div>
