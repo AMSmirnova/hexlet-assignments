@@ -12,7 +12,8 @@ import lombok.Getter;
 @Getter
 public class PostsPage {
     private List<Post> posts;
-    private int pageNumber;
+    private int currentPageNumber;
+    private int maxPage;
 }
 // END
 

@@ -2,11 +2,13 @@ package exercise.controller;
 
 
 import java.util.Collections;
+import java.util.List;
 //import java.util.List;
 //import java.util.ArrayList;
 import exercise.dto.posts.PostsPage;
 import exercise.dto.posts.PostPage;
 //import exercise.model.Post;
+import exercise.model.Post;
 import exercise.repository.PostRepository;
 
 //import exercise.util.NamedRoutes;
@@ -17,13 +19,16 @@ public class PostsController {
 
     // BEGIN
     public static void index(Context ctx) {
-        var postsPage = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
+        var currentPage = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1);
 
         var allPosts = PostRepository.getEntities();
-//        if (postsPage == 0) { postsPage = 1; }
-//        if (postsPage == allPosts.size() % 5 + 1) { postsPage = allPosts.size() % 5; }
-        var posts = allPosts.subList(postsPage * 5, postsPage * 5 + 5);
-        var page = new PostsPage(posts, postsPage);
+
+        int maxPage = allPosts.size() / 5;
+        List<Post> posts;
+        if (currentPage != maxPage) {
+            posts = allPosts.subList((currentPage - 1) * 5, (currentPage - 1) * 5 + 5);
+        } else  posts = allPosts.subList((currentPage - 1) * 5, allPosts.size());
+        var page = new PostsPage(posts, currentPage, maxPage);
         ctx.render("posts/index.jte", Collections.singletonMap("page", page));
     }
 

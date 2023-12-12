@@ -20,9 +20,14 @@
                     </tr>
                 @endfor
             </table>
+
             <div>
-                <a href="${NamedRoutes.postsPath()}?page=${page.getPageNumber() - 1}">назад</a>
-                <a href="${NamedRoutes.postsPath()}?page=${page.getPageNumber() + 1}">вперед</a>
+                @if (page.getCurrentPageNumber() > 1)
+                    <a href="${NamedRoutes.postsPath()}?page=${page.getCurrentPageNumber() - 1}">назад</a>
+                @endif
+                @if (page.getCurrentPageNumber() < page.getMaxPage())
+                    <a href="${NamedRoutes.postsPath()}?page=${page.getCurrentPageNumber() + 1}">вперед</a>
+                @endif
             </div>
         </main>
     </div>
