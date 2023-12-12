@@ -23,10 +23,10 @@ public class PostRepository {
     public static Optional<Post> find(Long id) {
         var post = entities.stream()
                 .filter(entity -> entity.getId().equals(id))
-                .findAny();
-//                .orElse(null);
-//        return Optional.of(post);
-        return post;
+                .findAny()
+                .orElse(null);
+        return Optional.of(post);
+//        return post;
     }
 
     public static Optional<Post> findByName(String name) {

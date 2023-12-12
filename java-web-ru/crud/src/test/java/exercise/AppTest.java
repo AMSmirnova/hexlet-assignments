@@ -72,7 +72,7 @@ class AppTest {
     @Test
     void testPostNotFound() throws Exception {
         HttpResponse<String> response = Unirest.get(baseUrl + "/posts/999").asString();
-        assertThat(response.getStatus()).isEqualTo(500);
+        assertThat(response.getStatus()).isEqualTo(404);
     }
 
 }

@@ -34,11 +34,15 @@ public class PostsController {
 
     public static void show(Context ctx) {
         var id = ctx.pathParamAsClass("id", Long.class).get();
-        var post = PostRepository.find(id)
-                .orElseThrow(() -> new NotFoundResponse("Page not found"));
+        try {
+            Post post = PostRepository.find(id)
+                    .orElseThrow(() -> new NotFoundResponse("Page not found"));
 
-        var page = new PostPage(post);
-        ctx.render("posts/show.jte", Collections.singletonMap("page", page));
+            var page = new PostPage(post);
+            ctx.render("posts/show.jte", Collections.singletonMap("page", page));
+        } catch (Exception e) {
+            throw new NotFoundResponse("Page not found");
+        }
     }
 
 
