@@ -21,20 +21,15 @@ public class PostRepository {
     }
 
     public static Optional<Post> find(Long id) {
-        var post = entities.stream()
+        return entities.stream()
                 .filter(entity -> entity.getId().equals(id))
-                .findAny()
-                .orElse(null);
-        return Optional.of(post);
-//        return post;
+                .findAny();
     }
 
     public static Optional<Post> findByName(String name) {
-        var post = entities.stream()
+        return entities.stream()
                 .filter(entity -> entity.getName().equals(name))
-                .findAny()
-                .orElse(null);
-        return Optional.of(post);
+                .findAny();
     }
 
     public static boolean existsByName(String name) {
