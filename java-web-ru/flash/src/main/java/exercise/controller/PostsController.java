@@ -15,7 +15,6 @@ public class PostsController {
 
     public static void build(Context ctx) {
         var page = new BuildPostPage();
-        page.setFlash(ctx.consumeSessionAttribute("flash"));
         ctx.render("posts/build.jte", Collections.singletonMap("page", page));
     }
 
@@ -27,6 +26,7 @@ public class PostsController {
 
         var page = new PostsPage(posts);
         page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
 
         ctx.render("posts/index.jte", Collections.singletonMap("page", page));
     }
@@ -40,12 +40,12 @@ public class PostsController {
             var post = new Post(name, body);
             PostRepository.save(post);
             ctx.sessionAttribute("flash", "Пост сохранен!");
+            ctx.sessionAttribute("flash-type", "success");
             ctx.redirect(NamedRoutes.postsPath());
         } catch (ValidationException e) {
             var name = ctx.formParam("name");
             var page = new BuildPostPage(name, body, e.getErrors());
-            ctx.sessionAttribute("flash", "Ошибка!");
-            ctx.render("posts/build.jte", Collections.singletonMap("page", page));
+            ctx.render("posts/build.jte", Collections.singletonMap("page", page)).status(422);
         }
     }
     // END

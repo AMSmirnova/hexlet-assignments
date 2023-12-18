@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class BuildPostPage extends BasePage {
+public class BuildPostPage {
     private String name;
     private String body;
     private Map<String, List<ValidationError<Object>>> errors;
