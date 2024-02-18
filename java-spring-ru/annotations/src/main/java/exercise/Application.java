@@ -14,7 +14,7 @@ public class Application {
                 System.out.println("Method "
                         + method.getName()
                         + " returns a value of type "
-                        + method.getReturnType());
+                        + method.getReturnType().getSimpleName());
             }
         }
         // END
