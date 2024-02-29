@@ -16,11 +16,7 @@ import java.util.List;
 public class CommentsController {
 
     @Autowired
-    private final CommentRepository commentRepository;
-
-    public CommentsController(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
+    private CommentRepository commentRepository;
 
     @GetMapping(path = "")
     public List<Comment> index() {
@@ -52,9 +48,7 @@ public class CommentsController {
 
     @DeleteMapping(path = "/{id}")
     public void destroy(@PathVariable Long id) {
-        var comment = commentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Comment with id " + id + " not found"));
-        commentRepository.delete(comment);
+       commentRepository.deleteById(id);
     }
 
 }

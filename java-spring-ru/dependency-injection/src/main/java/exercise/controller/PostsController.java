@@ -17,15 +17,9 @@ import exercise.repository.PostRepository;
 public class PostsController {
 
     @Autowired
-    private final PostRepository postRepository;
-
+    private PostRepository postRepository;
     @Autowired
-    private final CommentRepository commentRepository;
-
-    public PostsController(PostRepository postRepository, CommentRepository commentRepository) {
-        this.postRepository = postRepository;
-        this.commentRepository = commentRepository;
-    }
+    private CommentRepository commentRepository;
 
     @GetMapping(path = "")
     public List<Post> index() {
@@ -59,10 +53,8 @@ public class PostsController {
 
     @DeleteMapping(path = "/{id}")
     public void destroy(@PathVariable Long id) {
-        var post = postRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found"));
         commentRepository.deleteByPostId(id);
-        postRepository.delete(post);
+        postRepository.deleteById(id);
     }
 }
 // END
