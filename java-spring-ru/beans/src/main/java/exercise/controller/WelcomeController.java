@@ -13,20 +13,11 @@ import java.time.LocalTime;
 @RestController
 public class WelcomeController {
 
+    @Autowired
     private Daytime daytime;
 
-
     @GetMapping(path = "/welcome")
-    public String index() {
-
-        LocalTime min = LocalTime.of(06, 0, 0, 0);
-        LocalTime max = LocalTime.of(22, 0, 0, 0);
-        if (LocalTime.now().isAfter(min) && LocalTime.now().isBefore(max)) {
-            daytime = new Day();
-        } else {
-            daytime = new Night();
-        }
-
+    public String welcome() {
         return "It is " + daytime.getName() + " now! Welcome to Spring!";
     }
 
