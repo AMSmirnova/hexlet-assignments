@@ -74,16 +74,20 @@ class ApplicationTest {
     // BEGIN
     @Test
     public void testCreate() throws Exception {
-        var task = newTask();
+        var data = newTask();
 
         var request = post("/tasks")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(task));
+                .content(om.writeValueAsString(data));
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated());
 
-        assertThat(taskRepository.findByTitle(task.getTitle())).isPresent();
+        var task = taskRepository.findByTitle(data.getTitle()).get();
+
+        assertThat(task).isNotNull();
+        assertThat(task.getTitle()).isEqualTo(data.getTitle());
+        assertThat(task.getDescription()).isEqualTo(data.getDescription());
     }
 
     @Test
@@ -91,10 +95,16 @@ class ApplicationTest {
         var task = newTask();
         taskRepository.save(task);
 
-        var request = get("/tasks/" + task.getId());
+        var request = get("/tasks/{id}", task.getId());
 
-        mockMvc.perform(request)
-                .andExpect(status().isOk());
+        var result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+       assertThatJson(body).and(
+               v -> v.node("title").isEqualTo(task.getTitle()),
+               v -> v.node("description").isEqualTo(task.getDescription())
+       );
     }
 
     @Test
@@ -105,7 +115,7 @@ class ApplicationTest {
         var data = new HashMap<>();
         data.put("title", "new title");
 
-        var request = put("/tasks/" + task.getId())
+        var request = put("/tasks/{id}", task.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
@@ -113,7 +123,7 @@ class ApplicationTest {
                 .andExpect(status().isOk());
 
         task = taskRepository.findById(task.getId()).get();
-        assertThat(task.getTitle()).isEqualTo("new title");
+        assertThat(task.getTitle()).isEqualTo(data.get("title"));
     }
 
     @Test
@@ -121,7 +131,7 @@ class ApplicationTest {
         var task = newTask();
         taskRepository.save(task);
 
-        var request = delete("/tasks/" + task.getId());
+        var request = delete("/tasks/{id}", task.getId());
         mockMvc.perform(request)
                         .andExpect(status().isOk());
 
