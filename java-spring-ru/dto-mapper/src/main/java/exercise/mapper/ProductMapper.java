@@ -8,23 +8,18 @@ import exercise.dto.ProductUpdateDTO;
 import exercise.model.Product;
 import org.mapstruct.*;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        unmappedTargetPolicy = ReportingPolicy.IGNORE
+)
 public abstract class ProductMapper {
     @Mapping(target = "name", source = "title")
     @Mapping(target = "cost", source = "price")
     @Mapping(target = "barcode", source = "vendorCode")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     public abstract Product map(ProductCreateDTO dto);
 
 
     @Mapping(target = "cost", source = "price")
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "name", ignore = true)
-    @Mapping(target = "barcode", ignore = true)
     public abstract void update(ProductUpdateDTO dto, @MappingTarget Product model);
 
     @Mapping(target = "title", source = "name") // or @InheritInverseConfiguration
