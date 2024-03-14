@@ -20,7 +20,7 @@ public class GuestCreateDTO {
     private String phoneNumber;
 
     @NotNull
-    @Pattern(regexp = "[0-9]{4,5}")
+    @Pattern(regexp = "[0-9]{4}")
     private String clubCard;
 
     @FutureOrPresent
