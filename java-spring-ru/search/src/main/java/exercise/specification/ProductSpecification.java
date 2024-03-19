@@ -12,9 +12,14 @@ public class ProductSpecification {
 
     public Specification<Product> build(ProductParamsDTO params) {
         return withCategoryId(params.getCategoryId())
+                .and(withTitle(params.getTitleCont()))
                 .and(withPriceGt(params.getPriceGt()))
                 .and(withPriceLt(params.getPriceLt()))
                 .and(withRatingGt(params.getRatingGt()));
+    }
+
+    private Specification<Product> withTitle(String subTitle) {
+        return (root, query, cb) -> subTitle == null ? cb.conjunction() : cb.like(root.get("title"), subTitle);
     }
 
 
