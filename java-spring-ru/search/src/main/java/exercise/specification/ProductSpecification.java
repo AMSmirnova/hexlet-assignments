@@ -19,7 +19,9 @@ public class ProductSpecification {
     }
 
     private Specification<Product> withTitle(String subTitle) {
-        return (root, query, cb) -> subTitle == null ? cb.conjunction() : cb.like(root.get("title"), subTitle);
+        return (root, query, cb) -> subTitle == null
+                ? cb.conjunction()
+                : cb.like(cb.lower(root.get("title")), "%" + subTitle + "%");
     }
 
 
