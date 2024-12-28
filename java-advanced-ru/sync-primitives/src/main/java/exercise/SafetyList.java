@@ -1,5 +1,8 @@
 package exercise;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class SafetyList {
     // BEGIN
     private List<Integer> array = new ArrayList<>();
